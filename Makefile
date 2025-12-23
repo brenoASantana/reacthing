@@ -53,12 +53,12 @@ clean-all: clean
 	@echo "✅ Tudo limpo!"
 
 clean-globo:
-	@echo "🌐 Removendo referências a globo..."
+	@echo "🌐 Removendo registries Globo e usando npm.js padrão..."
 	rm -f package-lock.json
 	rm -rf node_modules
-	@echo "📦 Reinstalando dependências do npm padrão..."
-	npm install
-	@echo "✅ Referências a globo removidas e pacotes reinstalados!"
+	@echo "📦 Reinstalando dependências do NPM público..."
+	npm install --registry=https://registry.npmjs.org/
+	@echo "✅ Configurado com NPM público! O arquivo .npmrc local garante que future instalações usem o registro padrão."
 
 # ─────────────────────────────────────────────────────────────────
 # DESENVOLVIMENTO
@@ -95,9 +95,9 @@ lint:
 	@echo "ℹ️  Use 'make format' para corrigir automaticamente"
 
 format:
-	@echo "✨ Formatando código..."
-	npx prettier --write "src/**/*.{ts,tsx,css,json}" || true
-	@echo "✅ Código formatado!"
+	@echo "✨ Formatando código com Biome..."
+	npx biome format --write src/ || true
+	@echo "✅ Código formatado com sucesso!"
 
 audit:
 	@echo "🔐 Verificando vulnerabilidades..."
