@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./App.css";
 import { Usuario } from "./types/Usuario";
 import { AddView } from "./views/AddView";
@@ -9,7 +9,14 @@ function App() {
   const [currentView, setCurrentView] = useState<"list" | "add" | "edit">(
     "list"
   );
-  const [usuarios, setUsuarios] = useState<Usuario[]>([]);
+
+  const [usuarios, setUsuarios] = useState<Usuario[]>(
+    JSON.parse(localStorage.getItem("lista-usuarios") || "[]")
+  );
+
+  useEffect(() => {
+    localStorage.setItem("lista-usuarios", JSON.stringify(usuarios));
+  }, [usuarios]); // Dependências
 
   return (
     <div className="App">
