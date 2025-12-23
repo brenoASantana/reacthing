@@ -1,7 +1,7 @@
 import React from "react";
 
 interface ButtonProps {
-  onClick: () => void;
+  onClick?: () => void;
   children: React.ReactNode;
   variant?: "primary" | "secondary" | "danger";
   disabled?: boolean;

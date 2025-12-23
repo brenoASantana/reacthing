@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { Button } from "../components/Button";
 import { Usuario } from "../types/Usuario";
 
 interface ListViewProps {
@@ -49,9 +51,18 @@ export function ListaUsuarios({ usuarios, setUsuarios }: ListViewProps) {
               <span>
                 {usuario.id} - <strong>{usuario.nome}</strong>
               </span>
-              <button onClick={() => removerUsuario(usuario.id)}>
+              <Link
+                to={`/editar/${usuario.id}`}
+                style={{ textDecoration: "none", marginRight: "8px" }}
+              >
+                <Button variant="primary">✏️ Editar Usuário</Button>
+              </Link>
+              <Button
+                onClick={() => removerUsuario(usuario.id)}
+                variant="danger"
+              >
                 🗑️ Remover
-              </button>
+              </Button>
             </li>
           ))}
         </ul>

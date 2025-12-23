@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Usuario } from "../types/Usuario";
+import { useNavigate } from 'react-router-dom';
 
 interface AddViewProps {
   usuarios: Usuario[];
@@ -8,6 +9,7 @@ interface AddViewProps {
 
 export function AddView({ usuarios, setUsuarios }: AddViewProps) {
   const [novoNome, setNovoNome] = useState("");
+  const navigate = useNavigate();
 
   function adicionarUsuario() {
     if (novoNome.trim() === "") return;
@@ -19,6 +21,7 @@ export function AddView({ usuarios, setUsuarios }: AddViewProps) {
 
     setUsuarios([...usuarios, novoUsuario]);
     setNovoNome("");
+    navigate("/");
   }
 
   return (
