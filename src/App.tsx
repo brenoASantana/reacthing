@@ -4,11 +4,9 @@ import { Usuario } from "./types/Usuario";
 import { AddView } from "./views/AddView";
 import { EditView } from "./views/EditView";
 import { ListaUsuarios } from "./views/ListView";
+import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 
 function App() {
-  const [currentView, setCurrentView] = useState<"list" | "add" | "edit">(
-    "list"
-  );
 
   const [usuarios, setUsuarios] = useState<Usuario[]>(
     JSON.parse(localStorage.getItem("lista-usuarios") || "[]")
@@ -19,39 +17,29 @@ function App() {
   }, [usuarios]); // Dependências
 
   return (
+    <BrowserRouter>
     <div className="App">
       <header className="App-header">
         <h1>💼 Reacthing - Gerenciador de Usuários</h1>
         <nav>
-          <button onClick={() => setCurrentView("list")}>
-            📋 Lista de Usuários
-          </button>
-          <button onClick={() => setCurrentView("add")}>
-            ➕ Adicionar Usuário
-          </button>
-          <button onClick={() => setCurrentView("edit")}>
-            ✏️ Editar Usuário
-          </button>
+          <Link to="/">📋 Lista de Usuários</Link>
+          <Link to="/adicionar">➕ Adicionar Usuário</Link>
+          <Link to="/editar">✏️ Editar Usuário</Link>
         </nav>
       </header>
 
-      <main className="App-main">
-        {currentView === "list" && (
-          <ListaUsuarios usuarios={usuarios} setUsuarios={setUsuarios} />
-        )}
-        {currentView === "add" && (
-          <AddView usuarios={usuarios} setUsuarios={setUsuarios} />
-        )}
-        {currentView === "edit" && (
-          <EditView usuarios={usuarios} setUsuarios={setUsuarios} />
-        )}
-      </main>
+
+      <Routes>
+        <Route path="/adicionar" element={<AddView usuarios={usuarios} setUsuarios={setUsuarios} />} />
+        <Route path="/editar" element={<EditView usuarios={usuarios} setUsuarios={setUsuarios} />} />
+        <Route path="/" element={<ListaUsuarios usuarios={usuarios} setUsuarios={setUsuarios} />} />
+      </Routes>
 
       <footer className="App-footer">
         <p>© 2025 Reacthing - Feito pro Breno Santana</p>
       </footer>
     </div>
-  );
+  </BrowserRouter>);
 }
 
 export default App;
